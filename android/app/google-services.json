@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "973121984053",
+    "project_id": "tech-trove-shop-3ea50",
+    "storage_bucket": "tech-trove-shop-3ea50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973121984053:android:eb57c772b96d8a919b437c",
+        "android_client_info": {
+          "package_name": "com.example.tech_trove_shop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWa2oMnwVYsUapCby5pyZNmzY3_z-denY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
