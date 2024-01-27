@@ -62,10 +62,16 @@ class _AccountScreenState extends State<AccountScreen> {
                 SizedBox(
                   width: 130,
                   child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      ),
                       onPressed: () {
                         Routes().push(const EditProfile(), context);
                       },
-                      child: const Text("Edit Profile")),
+                      child: const Text(
+                        "Edit Profile",
+                        style: TextStyle(color: Colors.lightBlueAccent),
+                      )),
                 )
               ],
             ),

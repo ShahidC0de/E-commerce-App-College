@@ -53,6 +53,9 @@ class _CartScreenState extends State<CartScreen> {
                   height: 50,
                   width: 350,
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                    ),
                     onPressed: () {
                       appProvider.clearBuyProduct();
                       appProvider.addBuyProductCartList();
@@ -63,7 +66,12 @@ class _CartScreenState extends State<CartScreen> {
                         Routes().push(const CartItemCheckOut(), context);
                       }
                     },
-                    child: const Text("checkout"),
+                    child: const Text(
+                      "checkout",
+                      style: TextStyle(
+                        color: Colors.lightBlueAccent,
+                      ),
+                    ),
                   ),
                 ),
               ],

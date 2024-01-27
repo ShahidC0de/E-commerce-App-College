@@ -86,7 +86,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   .contains(widget.singleProduct)
                               ? Icons.favorite
                               : Icons.favorite_border),
-                          color: Colors.blue,
+                          color: Colors.lightBlueAccent,
                         ),
                       ],
                     ),
@@ -111,9 +111,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                           },
                           padding: EdgeInsets.zero,
                           child: const CircleAvatar(
+                            backgroundColor: Colors.lightBlueAccent,
                             child: Icon(
                               Icons.remove,
-                              color: Colors.lightBlueAccent,
+                              color: Colors.white,
                             ),
                           ),
                         ),
@@ -138,7 +139,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                           },
                           padding: EdgeInsets.zero,
                           child: const CircleAvatar(
-                            child: Icon(Icons.add),
+                            backgroundColor: Colors.lightBlueAccent,
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ],
@@ -152,14 +157,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                         SizedBox(
                           height: 38,
                           width: 140,
-                          child: OutlinedButton(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.lightBlueAccent),
                             onPressed: () {
                               ProductModel productModel =
                                   widget.singleProduct.copyWith(qty: qty);
                               appProvider.addCartProductList(productModel);
                               showMessage("Added to Cart");
                             },
-                            child: const Text("Add to Cart"),
+                            child: const Text(
+                              "Add to Cart",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -169,6 +181,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                           height: 38,
                           width: 140,
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.lightBlueAccent),
                             onPressed: () {
                               ProductModel productModel =
                                   widget.singleProduct.copyWith(qty: qty);
@@ -179,7 +193,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   ),
                                   context);
                             },
-                            child: const Text("Buy"),
+                            child: const Text(
+                              "Buy",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ],
