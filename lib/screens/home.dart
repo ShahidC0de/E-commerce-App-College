@@ -132,13 +132,6 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(
                               width: 12.0,
                             ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.card_travel,
-                                  color: Colors.lightBlueAccent,
-                                  size: 35,
-                                ))
                           ],
                         ),
                         //CATEGORYLIST.MAP((E)=>NULL).TO LIST, organized in a way in which images in the database is been uploaded in the card widget, although it is in padding to look more good, but its card widget.

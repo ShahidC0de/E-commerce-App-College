@@ -47,6 +47,7 @@ dependencies:
   firebase_messaging: ^14.7.9
   flutter_stripe: ^10.0.0
   http: ^1.1.2
+  flutter_native_splash: ^2.3.9
   
   
 
@@ -65,6 +66,27 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
+flutter_native_splash:
+  # This package generates native code to customize Flutter's default white native splash screen
+  # with background color and splash image.
+  # Customize the parameters below, and run the following command in the terminal:
+  # dart run flutter_native_splash:create
+  # To restore Flutter's default white splash screen, run the following command in the terminal:
+  # dart run flutter_native_splash:remove
+
+  # IMPORTANT NOTE: These parameter do not affect the configuration of Android 12 and later, which
+  # handle splash screens differently that prior versions of Android.  Android 12 and later must be
+  # configured specifically in the android_12 section below.
+  
+  # color or background_image is the only required parameter.  Use color to set the background
+  # of your splash screen to a solid color.  Use background_image to set the background of your
+  # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
+  # size of the app. Only one parameter can be used, color and background_image cannot both be set.
+  image: "assets/images/welcome.png"
+  color: "#ffffff"
+  android: true
+  ios: true
+  #web: false
 flutter:
 
   # The following line ensures that the Material Icons font is
