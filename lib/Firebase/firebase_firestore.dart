@@ -90,21 +90,31 @@ class FirebaseFirestoreHelper {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("orders")
           .doc();
-      DocumentReference admin = _firebaseFirestore.collection("orders").doc();
+      DocumentReference admin =
+          _firebaseFirestore.collection("orders").doc(documentReference.id);
+      String uid = FirebaseAuth.instance.currentUser!.uid;
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await _firebaseFirestore.collection('users').doc(uid).get();
+      Map<String, dynamic> userData = documentSnapshot.data()!;
+      UserModel user = UserModel.fronJson((userData));
 
       admin.set({
         "products": list.map((e) => e.toJson()).toList(),
         "status": "pending",
+        "userId": uid,
         "totalPrice": totalPrice,
         "payment": payment,
         "orderId": admin.id,
+        "orderAddress": user.streetAddress,
       });
       documentReference.set({
+        "userId": uid,
         "products": list.map((e) => e.toJson()),
         "status": "pending",
         "totalPrice": totalPrice,
         "payment": payment,
         "orderId": documentReference.id,
+        "orderAddress": user.streetAddress,
       });
       Navigator.of(context, rootNavigator: true).pop();
       showMessage("Ordered Successfully");
