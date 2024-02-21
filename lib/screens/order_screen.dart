@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:tech_trove_shop/Firebase/firebase_firestore.dart';
 import 'package:tech_trove_shop/models/order_model.dart';
 
-class OrderScreen extends StatelessWidget {
+class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
 
+  @override
+  State<OrderScreen> createState() => _OrderScreenState();
+}
+
+class _OrderScreenState extends State<OrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,6 +107,40 @@ class OrderScreen extends StatelessWidget {
                                                               .lightBlueAccent,
                                                         ),
                                                       ),
+                                                      const SizedBox(
+                                                        height: 12.0,
+                                                      ),
+                                                      orderModel.status ==
+                                                                  'pending' ||
+                                                              orderModel
+                                                                      .status ==
+                                                                  'deliever'
+                                                          ? ElevatedButton(
+                                                              onPressed: () {
+                                                                FirebaseFirestoreHelper
+                                                                    .instance
+                                                                    .updateOrder(
+                                                                        orderModel,
+                                                                        'Canceled');
+                                                                setState(() {});
+                                                              },
+                                                              child: const Text(
+                                                                  'Cancel Order'))
+                                                          : SizedBox.fromSize(),
+                                                      orderModel.status ==
+                                                              'delivery'
+                                                          ? ElevatedButton(
+                                                              onPressed: () {
+                                                                FirebaseFirestoreHelper
+                                                                    .instance
+                                                                    .updateOrder(
+                                                                        orderModel,
+                                                                        'Delievered');
+                                                                setState(() {});
+                                                              },
+                                                              child: const Text(
+                                                                  'Order Delivered'))
+                                                          : SizedBox.fromSize(),
                                                     ],
                                                   )
                                           ],
