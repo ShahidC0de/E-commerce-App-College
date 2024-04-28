@@ -88,58 +88,42 @@ class _CategoryViewState extends State<CategoryView> {
                               itemBuilder: (ctx, index) {
                                 ProductModel singleproduct =
                                     productModelList[index];
-                                return Container(
-                                  color: Colors.white.withOpacity(0.3),
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(
-                                        height: 12.0,
-                                      ),
-                                      Image.network(
-                                        singleproduct.image,
-                                        height: 60,
-                                        width: 60,
-                                      ),
-                                      const SizedBox(
-                                        height: 12.0,
-                                      ),
-                                      Text(
-                                        singleproduct.name,
-                                        style: const TextStyle(
-                                          fontSize: 10.0,
-                                          fontWeight: FontWeight.bold,
+                                return InkWell(
+                                  onTap: () {
+                                    Routes().push(
+                                        ProductDetails(
+                                          singleProduct: singleproduct,
                                         ),
-                                      ),
-                                      Text(" Rs : ${singleproduct.price}"),
-                                      const SizedBox(
-                                        height: 6.0,
-                                      ),
-                                      SizedBox(
-                                          height: 45,
-                                          width: 100,
-                                          child: OutlinedButton(
-                                              style: OutlinedButton.styleFrom(
-                                                  side: const BorderSide(
-                                                color: Colors.blue,
-                                                width: 1.7,
-                                              )),
-                                              onPressed: () {
-                                                Routes().push(
-                                                    ProductDetails(
-                                                      singleProduct:
-                                                          singleproduct,
-                                                    ),
-                                                    context);
-                                                // Navigator.of(context).push(
-                                                //     MaterialPageRoute(
-                                                //         builder: (ctx) =>
-                                                //             ProductDetails(
-                                                //               singleProduct:
-                                                //                   singleproduct,
-                                                //             )));
-                                              },
-                                              child: const Text("Buy")))
-                                    ],
+                                        context);
+                                  },
+                                  child: Container(
+                                    color: Colors.white.withOpacity(0.3),
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(
+                                          height: 12.0,
+                                        ),
+                                        Image.network(
+                                          singleproduct.image,
+                                          height: 60,
+                                          width: 60,
+                                        ),
+                                        const SizedBox(
+                                          height: 12.0,
+                                        ),
+                                        Text(
+                                          singleproduct.name,
+                                          style: const TextStyle(
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(" Rs : ${singleproduct.price}"),
+                                        const SizedBox(
+                                          height: 6.0,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               }),

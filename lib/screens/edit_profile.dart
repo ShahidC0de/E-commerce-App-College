@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -34,11 +35,12 @@ class _EditProfileState extends State<EditProfile> {
     AppProvider appProvider = Provider.of<AppProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: const Text(
           "Edit Profile",
           style: TextStyle(
-            color: Colors.lightBlueAccent,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -50,7 +52,12 @@ class _EditProfileState extends State<EditProfile> {
               ? CupertinoButton(
                   onPressed: takePicture,
                   child: const CircleAvatar(
-                      radius: 70, child: Icon(Icons.camera_alt)),
+                      backgroundColor: Colors.grey,
+                      radius: 70,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                      )),
                 )
               : CupertinoButton(
                   onPressed: takePicture,
@@ -62,45 +69,66 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(
             height: 12.0,
           ),
-          TextFormField(
-            controller: textEditingController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-                //decoration of textformfield.
-                //EMAIL TEXTFORM FILED
-                hintText: appProvider.getUserInformation.name,
-                hintStyle: const TextStyle(
-                  color: Colors.lightBlueAccent,
-                ),
-                prefixIcon: const Icon(
-                  //putting an icon.
-                  Icons.email_outlined,
-                  color: Colors.lightBlueAccent,
-                ),
-                border: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    color: Colors.lightBlueAccent,
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.grey, borderRadius: BorderRadius.circular(35)),
+            child: TextFormField(
+              controller: textEditingController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+
+                  //decoration of textformfield.
+                  //EMAIL TEXTFORM FILED
+                  hintText: appProvider.getUserInformation.name,
+                  hintStyle: const TextStyle(
+                    color: Colors.white,
                   ),
-                  borderRadius: BorderRadius.circular(40.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(
-                    width: 2,
-                    color: Colors.lightBlueAccent,
+                  prefixIcon: const Icon(
+                    //putting an icon.
+                    Icons.person_2_outlined,
+                    color: Colors.white,
                   ),
-                  borderRadius: BorderRadius.circular(40.0),
-                )),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(35.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      width: 2,
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(35.0),
+                  )),
+            ),
           ),
           const SizedBox(
             height: 25.0,
           ),
-          ElevatedButton(
-              onPressed: () async {
-                UserModel userModel = appProvider.getUserInformation
-                    .copyWith(name: textEditingController.text);
-                appProvider.updateUserInfor(context, userModel, image);
-              },
-              child: const Text("Update"))
+          const SizedBox(
+            height: 40,
+          ),
+          Container(
+            height: 60,
+            width: double.infinity,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(35)),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlueAccent,
+                ),
+                onPressed: () async {
+                  UserModel userModel = appProvider.getUserInformation
+                      .copyWith(name: textEditingController.text);
+                  appProvider.updateUserInfor(context, userModel, image);
+                },
+                child: const Text(
+                  "Update",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                )),
+          )
         ],
       ),
     );

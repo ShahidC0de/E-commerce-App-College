@@ -12,12 +12,14 @@ class FavourateScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           //appbar a flat border on the top of screen, and one back button with it;
           title: const Text(
             //title of the screen on appbar;
             "Favourates ",
             style: TextStyle(
-              color: Colors.lightBlueAccent, //color of text;
+              color: Colors.black, //color of text;
+              fontWeight: FontWeight.bold,
             ),
           ),
           backgroundColor: Colors.white, //color of appbar;

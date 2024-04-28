@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
 import 'package:tech_trove_shop/constants/routes.dart';
@@ -36,11 +37,11 @@ class _ProductDetailsState extends State<ProductDetails> {
               IconButton(
                 onPressed: () {
                   Routes().push(const CartScreen(), context);
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const CartScreen(),
-                  ));
                 },
-                icon: const Icon(Icons.shopping_cart),
+                icon: const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.lightBlueAccent,
+                ),
               )
             ],
           ),
@@ -65,7 +66,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
-                            color: Colors.lightBlueAccent,
+                            color: Colors.black,
                           ),
                         ),
                         IconButton(
@@ -92,6 +93,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     Text(
                       widget.singleProduct.description,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: Colors.black,
                       ),
@@ -105,7 +108,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           onPressed: () {
                             if (qty >= 1) {
                               setState(() {
-                                qty--;
+                                qty == 1 ? qty = qty : qty--;
                               });
                             }
                           },
@@ -151,12 +154,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                     const SizedBox(
                       height: 60.0,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Column(
                       children: [
                         SizedBox(
                           height: 38,
-                          width: 140,
+                          width: 400,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.lightBlueAccent),
@@ -169,20 +171,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                             child: const Text(
                               "Add to Cart",
                               style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                                 color: Colors.white,
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          width: 48.0,
+                          height: 40.0,
                         ),
                         SizedBox(
                           height: 38,
-                          width: 140,
+                          width: 400,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.lightBlueAccent),
+                              backgroundColor: Colors.lightBlueAccent,
+                            ),
                             onPressed: () {
                               ProductModel productModel =
                                   widget.singleProduct.copyWith(qty: qty);

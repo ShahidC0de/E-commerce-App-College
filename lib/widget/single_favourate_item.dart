@@ -21,7 +21,7 @@ class _SingleFavourateItem extends State<SingleFavourateItem> {
       margin: const EdgeInsets.only(bottom: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.lightBlueAccent, width: 2),
+        border: Border.all(color: Colors.white, width: 2),
       ),
       child: Row(
         children: [
@@ -41,52 +41,54 @@ class _SingleFavourateItem extends State<SingleFavourateItem> {
                 color: Colors.white.withOpacity(0.5),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.singleProduct.name,
-                                style: const TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.lightBlueAccent,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 6.0,
-                              ),
-                              CupertinoButton(
-                                onPressed: () {
-                                  appProvider.removeFavourateProductList(
-                                      widget.singleProduct);
-                                  showMessage("Removed from Wishlist");
-                                },
-                                child: const Text(
-                                  "Remove from wishlist",
-                                  style: TextStyle(
-                                    fontSize: 10.0,
-                                    color: Colors.lightBlueAccent,
+                  child: FittedBox(
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.singleProduct.name,
+                                  style: const TextStyle(
+                                    fontSize: 12.0,
+                                    color: Colors.black,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            "Rs: ${widget.singleProduct.price.toString()}",
-                            style: const TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.lightBlueAccent,
+                                const SizedBox(
+                                  height: 3.0,
+                                ),
+                                CupertinoButton(
+                                  onPressed: () {
+                                    appProvider.removeFavourateProductList(
+                                        widget.singleProduct);
+                                    showMessage("Removed from Wishlist");
+                                  },
+                                  child: const Text(
+                                    "Remove from wishlist",
+                                    style: TextStyle(
+                                      fontSize: 10.0,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "Rs: ${widget.singleProduct.price.toString()}",
+                                  style: const TextStyle(
+                                    fontSize: 10.0,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

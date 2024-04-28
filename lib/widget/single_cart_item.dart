@@ -30,7 +30,7 @@ class _SingleCartItemState extends State<SingleCartItem> {
       margin: const EdgeInsets.only(bottom: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.lightBlueAccent, width: 2),
+        border: Border.all(color: Colors.white, width: 2),
       ),
       child: Row(
         children: [
@@ -60,15 +60,8 @@ class _SingleCartItemState extends State<SingleCartItem> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                widget.singleProduct.name,
-                                style: const TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.lightBlueAccent,
-                                ),
-                              ),
                               const SizedBox(
-                                height: 6.0,
+                                height: 40.0,
                               ),
                               Row(
                                 children: [
@@ -119,6 +112,7 @@ class _SingleCartItemState extends State<SingleCartItem> {
                                   ),
                                 ],
                               ),
+                              const Spacer(),
                               CupertinoButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {

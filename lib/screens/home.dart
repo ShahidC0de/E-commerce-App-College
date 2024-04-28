@@ -66,7 +66,9 @@ class _HomePageState extends State<HomePage> {
                   height: 100,
                   width: 100,
                   alignment: Alignment.topCenter,
-                  child: const CircularProgressIndicator(),
+                  child: const CircularProgressIndicator(
+                    color: Colors.blueAccent,
+                  ),
                 ),
               )
             : Column(
@@ -79,58 +81,87 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(
                           height: kToolbarHeight - 15,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        Column(
                           children: [
-                            const Text(
-                              "Home",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 23.0,
-                                color: Colors.lightBlueAccent,
-                              ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Home',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 26),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(
+                                  Icons.edit_location_rounded,
+                                  size: 30,
+                                )
+                              ],
                             ),
-                            const SizedBox(
-                              width: 12.0,
-                            ),
-                            SizedBox(
-                              height: 50, //size of textformfield,
-                              width: 200,
-                              child: TextFormField(
-                                controller: search,
-                                onChanged: (String value) {
-                                  searchProducts(value);
-                                },
-                                keyboardType: TextInputType.name,
-                                decoration: InputDecoration(
-                                    //decoration of textformfield.
-                                    //EMAIL TEXTFORM FILED
-                                    hintText: "Search..",
-                                    hintStyle: const TextStyle(
-                                      color: Colors.lightBlueAccent,
-                                    ),
-                                    prefixIcon: const Icon(
-                                      //putting an icon.
-                                      Icons.search,
-                                      color: Colors.lightBlueAccent,
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Colors.lightBlueAccent,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 50, //size of textformfield,
+                                    width: double.infinity,
+
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
                                       ),
-                                      borderRadius: BorderRadius.circular(40.0),
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        width: 2,
-                                        color: Colors.lightBlueAccent,
-                                      ),
-                                      borderRadius: BorderRadius.circular(40.0),
-                                    )),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 12.0,
+                                    child: TextFormField(
+                                      controller: search,
+                                      onChanged: (String value) {
+                                        searchProducts(value);
+                                      },
+                                      keyboardType: TextInputType.name,
+                                      decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.all(2),
+
+                                          //decoration of textformfield.
+                                          //EMAIL TEXTFORM FILED
+                                          hintText: "Search..",
+                                          hintStyle: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                          prefixIcon: const Icon(
+                                            //putting an icon.
+                                            Icons.search,
+                                            color: Colors.black,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Colors.lightBlueAccent,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              width: 2,
+                                              color: Colors.lightBlueAccent,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 12.0,
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -148,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                                   children: categoriesList1
                                       //children in a row.. mapping into cards which are placed in row structure.
                                       .map((e) => Padding(
-                                            padding: const EdgeInsets.all(12.0),
+                                            padding: const EdgeInsets.all(2.0),
                                             child: CupertinoButton(
                                               onPressed: () {
                                                 Routes.instance.push(
@@ -158,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                                               },
                                               child: Card(
                                                 color: Colors.white,
-                                                elevation: 3.0,
+                                                elevation: 10.0,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(
@@ -183,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 23.0,
-                            color: Colors.lightBlueAccent,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -213,48 +244,38 @@ class _HomePageState extends State<HomePage> {
                                   itemBuilder: (ctx, index) {
                                     ProductModel singleProduct =
                                         searchList[index];
-                                    return Container(
-                                      color: Colors.white,
-                                      child: Column(
-                                        children: [
-                                          Image.network(
-                                            singleProduct.image,
-                                            height: 60,
-                                            width: 60,
-                                          ),
-                                          const SizedBox(
-                                            height: 12.0,
-                                          ),
-                                          Text(
-                                            singleProduct.name,
-                                            style: const TextStyle(
-                                              fontSize: 10.0,
-                                              color: Colors.lightBlueAccent,
+                                    return InkWell(
+                                      onTap: () {
+                                        Routes().push(
+                                            ProductDetails(
+                                                singleProduct: singleProduct),
+                                            context);
+                                      },
+                                      child: Container(
+                                        color: Colors.white,
+                                        child: Column(
+                                          children: [
+                                            Image.network(
+                                              singleProduct.image,
+                                              height: 120,
+                                              width: 120,
                                             ),
-                                          ),
-                                          Text("Rs: ${singleProduct.price}"),
-                                          const SizedBox(
-                                            height: 6.0,
-                                          ),
-                                          OutlinedButton(
-                                              style: OutlinedButton.styleFrom(
-                                                  side: const BorderSide(
-                                                color: Colors.lightBlueAccent,
-                                              )),
-                                              onPressed: () {
-                                                Routes().push(
-                                                    ProductDetails(
-                                                        singleProduct:
-                                                            singleProduct),
-                                                    context);
-                                              },
-                                              child: const Text(
-                                                "Buy",
-                                                style: TextStyle(
-                                                  color: Colors.lightBlueAccent,
-                                                ),
-                                              ))
-                                        ],
+                                            const SizedBox(
+                                              height: 12.0,
+                                            ),
+                                            Text(
+                                              singleProduct.name,
+                                              style: const TextStyle(
+                                                fontSize: 10.0,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Text("Rs: ${singleProduct.price}"),
+                                            const SizedBox(
+                                              height: 6.0,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     );
                                   }),
@@ -280,53 +301,38 @@ class _HomePageState extends State<HomePage> {
                                       itemBuilder: (ctx, index) {
                                         ProductModel singleProduct =
                                             productModelList[index];
-                                        return Container(
-                                          color: Colors.white,
-                                          child: Column(
-                                            children: [
-                                              Image.network(
-                                                singleProduct.image,
-                                                height: 60,
-                                                width: 60,
-                                              ),
-                                              const SizedBox(
-                                                height: 12.0,
-                                              ),
-                                              Text(
-                                                singleProduct.name,
-                                                style: const TextStyle(
-                                                  fontSize: 10.0,
-                                                  color: Colors.lightBlueAccent,
+                                        return InkWell(
+                                          onTap: () {
+                                            Routes().push(
+                                                ProductDetails(
+                                                    singleProduct:
+                                                        singleProduct),
+                                                context);
+                                          },
+                                          child: Container(
+                                            color: Colors.white,
+                                            child: Column(
+                                              children: [
+                                                Image.network(
+                                                  singleProduct.image,
+                                                  height: 80,
+                                                  width: 80,
                                                 ),
-                                              ),
-                                              Text(
-                                                  "Rs: ${singleProduct.price}"),
-                                              const SizedBox(
-                                                height: 6.0,
-                                              ),
-                                              OutlinedButton(
-                                                  style:
-                                                      OutlinedButton.styleFrom(
-                                                          side:
-                                                              const BorderSide(
-                                                    color:
-                                                        Colors.lightBlueAccent,
-                                                  )),
-                                                  onPressed: () {
-                                                    Routes().push(
-                                                        ProductDetails(
-                                                            singleProduct:
-                                                                singleProduct),
-                                                        context);
-                                                  },
-                                                  child: const Text(
-                                                    "Buy",
-                                                    style: TextStyle(
-                                                      color: Colors
-                                                          .lightBlueAccent,
-                                                    ),
-                                                  ))
-                                            ],
+                                                const SizedBox(
+                                                  height: 12.0,
+                                                ),
+                                                Text(
+                                                  singleProduct.name,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12.0,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                Text(
+                                                    "Rs: ${singleProduct.price}"),
+                                              ],
+                                            ),
                                           ),
                                         );
                                       }),

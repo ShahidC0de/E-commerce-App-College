@@ -54,7 +54,7 @@ class _CartScreenState extends State<CartScreen> {
                   width: 350,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.lightBlueAccent,
                     ),
                     onPressed: () {
                       appProvider.clearBuyProduct();
@@ -69,8 +69,9 @@ class _CartScreenState extends State<CartScreen> {
                     child: const Text(
                       "checkout",
                       style: TextStyle(
-                        color: Colors.lightBlueAccent,
-                      ),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
                     ),
                   ),
                 ),
@@ -79,12 +80,13 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
         appBar: AppBar(
+          centerTitle: true,
           //appbar a flat border on the top of screen, and one back button with it;
           title: const Text(
             //title of the screen on appbar;
             "Cart ",
             style: TextStyle(
-              color: Colors.lightBlueAccent, //color of text;
+              color: Colors.black, //color of text;
             ),
           ),
           backgroundColor: Colors.white, //color of appbar;
@@ -93,7 +95,7 @@ class _CartScreenState extends State<CartScreen> {
             ? const Center(
                 child: Text(
                   "Cart is Empty",
-                  style: TextStyle(color: Colors.lightBlueAccent),
+                  style: TextStyle(color: Colors.black),
                 ),
               )
             : ListView.builder(

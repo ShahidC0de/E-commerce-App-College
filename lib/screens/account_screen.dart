@@ -7,6 +7,7 @@ import 'package:tech_trove_shop/screens/change_password.dart';
 import 'package:tech_trove_shop/screens/edit_profile.dart';
 import 'package:tech_trove_shop/screens/favourate_screen.dart';
 import 'package:tech_trove_shop/screens/order_screen.dart';
+import 'package:tech_trove_shop/widget/list_tile_item.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -24,10 +25,10 @@ class _AccountScreenState extends State<AccountScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
-          "                    Account",
-          style: TextStyle(
-              color: Colors.lightBlueAccent, fontWeight: FontWeight.bold),
+          "Account",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
@@ -38,7 +39,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 appProvider.getUserInformation.image == null
                     ? const Icon(
                         Icons.person,
-                        color: Colors.lightBlueAccent,
+                        color: Colors.grey,
                         size: 120,
                       )
                     : CircleAvatar(
@@ -49,28 +50,31 @@ class _AccountScreenState extends State<AccountScreen> {
                 Text(
                   appProvider.getUserInformation.name,
                   style: const TextStyle(
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.lightBlueAccent,
+                    color: Colors.black,
                   ),
                 ),
                 Text(
                   appProvider.getUserInformation.email,
                   style: const TextStyle(
-                    color: Colors.lightBlueAccent,
+                    color: Colors.black,
                   ),
                 ),
                 SizedBox(
                   width: 130,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.lightBlueAccent,
                       ),
                       onPressed: () {
                         Routes().push(const EditProfile(), context);
                       },
                       child: const Text(
                         "Edit Profile",
-                        style: TextStyle(color: Colors.lightBlueAccent),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       )),
                 )
               ],
@@ -80,119 +84,58 @@ class _AccountScreenState extends State<AccountScreen> {
             flex: 2,
             child: Column(
               children: [
-                ListTile(
+                CustomListTile(
+                  leadingIcon: const Icon(Icons.shopping_bag_outlined),
+                  title: "Orders",
                   onTap: () {
                     Routes().push(const OrderScreen(), context);
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (ctx) => const OrderScreen(),
-                    //   ),
-                    // );
                   },
-                  leading: const Icon(
-                    Icons.shopping_bag,
-                    color: Colors.lightBlueAccent,
-                  ),
-                  title: const Text(
-                    "Orders",
-                    style: TextStyle(
-                      color: Colors.lightBlueAccent,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
-                ListTile(
+                CustomListTile(
+                  leadingIcon: const Icon(
+                    Icons.favorite_outline,
+                  ),
+                  title: 'Favourates',
                   onTap: () {
                     Routes().push(const FavourateScreen(), context);
-                    // Routes().push(const FavourateScreen(), context);
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (ctx) => const FavourateScreen(),
-                    //   ),
-                    // );
                   },
-                  leading: const Icon(
-                    Icons.favorite,
-                    color: Colors.lightBlueAccent,
-                  ),
-                  title: const Text(
-                    "Favourates",
-                    style: TextStyle(
-                      color: Colors.lightBlueAccent,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
-                ListTile(
-                  onTap: () {},
-                  leading: const Icon(
-                    Icons.info,
-                    color: Colors.lightBlueAccent,
-                  ),
-                  title: const Text(
-                    "About us",
-                    style: TextStyle(
-                      color: Colors.lightBlueAccent,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                CustomListTile(
+                  leadingIcon: const Icon(Icons.info_outline),
+                  title: 'About us..',
+                  onTap: () {
+                    Routes().push(const FavourateScreen(), context);
+                  },
                 ),
-                ListTile(
-                  onTap: () {},
-                  leading: const Icon(
+                CustomListTile(
+                  leadingIcon: const Icon(
                     Icons.support,
-                    color: Colors.lightBlueAccent,
                   ),
-                  title: const Text(
-                    "Support",
-                    style: TextStyle(
-                      color: Colors.lightBlueAccent,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  title: 'Support',
+                  onTap: () {
+                    Routes().push(const FavourateScreen(), context);
+                  },
                 ),
-                ListTile(
+                CustomListTile(
+                  leadingIcon: const Icon(
+                    Icons.security_outlined,
+                  ),
+                  title: 'Change Password',
                   onTap: () {
                     Routes().push(const ChangePassword(), context);
                   },
-                  leading: const Icon(
-                    Icons.change_circle,
-                    color: Colors.lightBlueAccent,
-                  ),
-                  title: const Text(
-                    "Change Password",
-                    style: TextStyle(
-                      color: Colors.lightBlueAccent,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
-                ListTile(
+                CustomListTile(
+                  leadingIcon: const Icon(
+                    Icons.logout_outlined,
+                  ),
+                  title: 'Logout',
                   onTap: () {
                     FirebaseAuthHelper.instance.signOut();
-                    setState(() {});
                   },
-                  leading: const Icon(
-                    Icons.logout,
-                    color: Colors.lightBlueAccent,
-                  ),
-                  title: const Text(
-                    "Logout",
-                    style: TextStyle(
-                      color: Colors.lightBlueAccent,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
                 const SizedBox(
                   height: 12.0,
-                ),
-                const Text(
-                  "Version 1.0.0",
-                  style: TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
               ],
             ),
