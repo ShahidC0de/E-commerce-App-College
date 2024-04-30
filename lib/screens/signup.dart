@@ -6,6 +6,7 @@ import 'package:tech_trove_shop/constants/constants.dart';
 import 'package:tech_trove_shop/constants/routes.dart';
 import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
 import 'package:tech_trove_shop/screens/home.dart';
+import 'package:tech_trove_shop/widget/custom_textfield.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});
@@ -21,7 +22,7 @@ class SignUp extends StatelessWidget {
     TextEditingController streetAddress = TextEditingController();
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -31,176 +32,71 @@ class SignUp extends StatelessWidget {
                 height: kToolbarHeight + 24,
               ),
               const Text(
-                "Signup",
+                "Create an Account",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.lightBlueAccent,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20),
+                    fontSize: 24),
               ),
               const SizedBox(
                 height: 24.0,
               ),
-              SizedBox(
-                height: 60,
-                width: 300,
-                child: TextFormField(
-                  controller: name,
-                  keyboardType: TextInputType.name,
-                  decoration: InputDecoration(
-                      hintText: "Full Name",
-                      hintStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.person_outline,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      )),
+              CustomTextField(
+                textEditingController: name,
+                prefixIcon: const Icon(
+                  Icons.person_2_outlined,
+                  color: Colors.lightBlueAccent,
                 ),
+                hintText: 'Name',
+                textInputType: TextInputType.name,
               ),
               const SizedBox(
                 height: 24.0,
               ),
-              SizedBox(
-                height: 60,
-                width: 300,
-                child: TextFormField(
-                  controller: email,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                      hintText: "Email Address",
-                      hintStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.email_outlined,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      )),
+              CustomTextField(
+                textEditingController: email,
+                prefixIcon: const Icon(
+                  Icons.email_outlined,
+                  color: Colors.lightBlueAccent,
                 ),
+                hintText: 'Email',
+                textInputType: TextInputType.emailAddress,
               ),
               const SizedBox(
                 height: 24.0,
               ),
-              SizedBox(
-                height: 60,
-                width: 300,
-                child: TextFormField(
-                  controller: streetAddress,
-                  keyboardType: TextInputType.streetAddress,
-                  decoration: InputDecoration(
-                      hintText: " Street Address",
-                      hintStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.abc,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      )),
+              CustomTextField(
+                textEditingController: streetAddress,
+                prefixIcon: const Icon(
+                  Icons.abc_outlined,
+                  color: Color.fromRGBO(64, 196, 255, 1),
                 ),
+                hintText: 'Street Address',
+                textInputType: TextInputType.streetAddress,
               ),
               const SizedBox(
                 height: 24.0,
               ),
-              SizedBox(
-                height: 60,
-                width: 300,
-                child: TextFormField(
-                  controller: password,
-                  keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecoration(
-                      hintText: "Password",
-                      hintStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.password_rounded,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      )),
+              CustomTextField(
+                textEditingController: password,
+                prefixIcon: const Icon(
+                  Icons.password_outlined,
+                  color: Colors.lightBlueAccent,
                 ),
+                hintText: 'Password',
+                textInputType: TextInputType.visiblePassword,
               ),
               const SizedBox(
                 height: 24.0,
               ),
-              SizedBox(
-                height: 60,
-                width: 300,
-                child: TextFormField(
-                  controller: confirmPassword,
-                  keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecoration(
-                      hintText: " Confirm Password",
-                      hintStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
-                      prefixIcon: const Icon(
-                        Icons.password_rounded,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      )),
+              CustomTextField(
+                textEditingController: confirmPassword,
+                prefixIcon: const Icon(
+                  Icons.password_outlined,
+                  color: Colors.lightBlueAccent,
                 ),
+                hintText: 'Confirm Password',
+                textInputType: TextInputType.visiblePassword,
               ),
               const SizedBox(
                 height: 24.0,
@@ -231,14 +127,14 @@ class SignUp extends StatelessWidget {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.lightBlueAccent,
                     ),
                     child: const Text(
-                      "Signup",
+                      "Sign Up",
                       style: TextStyle(
-                        color: Colors.lightBlueAccent,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
                     )),
               ),
               const SizedBox(
@@ -251,8 +147,9 @@ class SignUp extends StatelessWidget {
                 child: const Text(
                   "Already have an account?",
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
+                    color: Colors.lightBlueAccent,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

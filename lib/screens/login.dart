@@ -1,12 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
 import 'package:tech_trove_shop/constants/routes.dart';
 import 'package:tech_trove_shop/screens/home.dart';
 import 'package:tech_trove_shop/screens/signup.dart';
+import 'package:tech_trove_shop/widget/custom_textfield.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -49,54 +53,38 @@ class _LoginState extends State<Login> {
                 height: 12.0,
               ),
               //textformfield is use to get values from user.
-              SizedBox(
-                height: 60, //size of textformfield,
-                width: 300,
-                child: TextFormField(
-                  controller: email,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                      //decoration of textformfield.
-                      //EMAIL TEXTFORM FILED
-                      hintText: "Email",
-                      hintStyle: const TextStyle(
-                        color: Colors.lightBlueAccent,
-                      ),
-                      prefixIcon: const Icon(
-                        //putting an icon.
-                        Icons.email_outlined,
-                        color: Colors.lightBlueAccent,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Colors.lightBlueAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(40.0),
-                      )),
+              CustomTextField(
+                textEditingController: email,
+                prefixIcon: const Icon(
+                  Icons.email_outlined,
+                  color: Colors.lightBlueAccent,
                 ),
+                hintText: 'Email',
+                textInputType: TextInputType.emailAddress,
               ),
               const SizedBox(
                 height: 8.0,
               ),
               //PASSWORD TEXTFORM FIELD;
-              SizedBox(
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(40),
+                ),
                 height: 60,
                 width: 300,
                 child: TextFormField(
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                   controller: password,
                   obscureText:
                       isShowPassword, //obsecuretext is true, is showpassword is true,
                   decoration: InputDecoration(
                       hintText: "Password",
                       hintStyle: const TextStyle(
-                        color: Colors.lightBlueAccent,
+                        color: Colors.white,
                       ),
                       suffixIcon: CupertinoButton(
                         onPressed: () {
@@ -176,8 +164,9 @@ class _LoginState extends State<Login> {
                 child: const Text(
                   "Create an account", // for signup page navigation.
                   style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10,
+                    color: Colors.lightBlueAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
                   ),
                 ),
               ),
