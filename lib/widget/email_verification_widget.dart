@@ -31,7 +31,6 @@ class _EmailSendVerificationDialogState
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _timer.cancel();
   }
@@ -53,19 +52,21 @@ class _EmailSendVerificationDialogState
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.white,
-      title: const Text('Email Verification '),
+      title: Text('Email Verification ${remainingSeconds.toString()}'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text('verify your Email'),
+          const Text('After verification please restart the app'),
           const SizedBox(
             height: 20,
           ),
           ElevatedButton(
               onPressed: () async {
                 await FirebaseAuthHelper.instance.verifyTheUser();
+                _timer.cancel();
                 remainingSeconds == 60;
+                startTimer();
                 setState(() {});
               },
               child: Text(

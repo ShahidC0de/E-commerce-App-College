@@ -6,7 +6,6 @@ import 'package:tech_trove_shop/constants/routes.dart';
 import 'package:tech_trove_shop/models/product_model.dart';
 import 'package:tech_trove_shop/provider/app_provider.dart';
 import 'package:tech_trove_shop/screens/cart_screen.dart';
-import 'package:tech_trove_shop/screens/check_out.dart';
 
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';

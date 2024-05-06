@@ -1,13 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
 import 'package:tech_trove_shop/constants/routes.dart';
-import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
-import 'package:tech_trove_shop/screens/home.dart';
+import 'package:tech_trove_shop/screens/login.dart';
 import 'package:tech_trove_shop/widget/custom_textfield.dart';
 import 'package:tech_trove_shop/widget/email_verification_widget.dart';
 
@@ -150,7 +147,7 @@ class SignUp extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Routes().pushAndRemoveUntil(const HomePage(), context);
+                  Routes().pushAndRemoveUntil(const Login(), context);
                 },
                 child: const Text(
                   "Already have an account?",

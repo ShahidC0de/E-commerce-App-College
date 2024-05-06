@@ -71,7 +71,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         Routes().push(const EditProfile(), context);
                       },
                       child: const Text(
-                        "Edit Profile",
+                        "Edit",
                         style: TextStyle(
                           color: Colors.white,
                         ),

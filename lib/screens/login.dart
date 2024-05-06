@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
 import 'package:tech_trove_shop/constants/routes.dart';
+import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
 import 'package:tech_trove_shop/screens/home.dart';
 import 'package:tech_trove_shop/screens/signup.dart';
 import 'package:tech_trove_shop/widget/custom_textfield.dart';
@@ -134,7 +135,7 @@ class _LoginState extends State<Login> {
                           .login(email.text, password.text, context);
                       if (isLogined) {
                         //means the firebase service is been called so navigate to homepage.
-                        Routes().pushAndRemoveUntil(const HomePage(),
+                        Routes().pushAndRemoveUntil(const CustomBottomBar(),
                             context); //push and remove until means navigate to next screen but comming back is not possible.
                       }
                     }

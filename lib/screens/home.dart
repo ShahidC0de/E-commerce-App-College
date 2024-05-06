@@ -120,6 +120,9 @@ class _HomePageState extends State<HomePage> {
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                     child: TextFormField(
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                      ),
                                       controller: search,
                                       onChanged: (String value) {
                                         searchProducts(value);
