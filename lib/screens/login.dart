@@ -1,10 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
 import 'package:tech_trove_shop/constants/routes.dart';

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -37,7 +38,14 @@ class MyApp extends StatelessWidget {
               stream: FirebaseAuthHelper.instance.getAuthChange,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return const CustomBottomBar();
+                  // ignore: unused_local_variable
+                  bool isEmailVerified =
+                      FirebaseAuth.instance.currentUser!.emailVerified;
+                  if (FirebaseAuth.instance.currentUser!.emailVerified) {
+                    return const CustomBottomBar();
+                  } else {
+                    return const Welcome();
+                  }
                 } else {
                   return const Welcome();
                 }

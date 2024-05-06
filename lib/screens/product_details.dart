@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
 import 'package:tech_trove_shop/constants/routes.dart';
@@ -18,6 +17,7 @@ import 'package:tech_trove_shop/screens/check_out.dart';
 
 class ProductDetails extends StatefulWidget {
   final ProductModel singleProduct;
+  // ignore: use_super_parameters
   const ProductDetails({Key? key, required this.singleProduct})
       : super(key: key);
 
@@ -173,34 +173,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 40.0,
-                        ),
-                        SizedBox(
-                          height: 38,
-                          width: 400,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.lightBlueAccent,
-                            ),
-                            onPressed: () {
-                              ProductModel productModel =
-                                  widget.singleProduct.copyWith(qty: qty);
-                              appProvider.addCartProductList(productModel);
-                              Routes().push(
-                                  CheckOut(
-                                    singleProduct: productModel,
-                                  ),
-                                  context);
-                            },
-                            child: const Text(
-                              "Buy",
-                              style: TextStyle(
                                 color: Colors.white,
                               ),
                             ),

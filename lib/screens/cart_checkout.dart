@@ -26,7 +26,13 @@ class _CartItemCheckOutState extends State<CartItemCheckOut> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Checkout"),
+        title: const Text(
+          "Checkout",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -152,39 +158,6 @@ class _CartItemCheckOutState extends State<CartItemCheckOut> {
 
                     default:
                   }
-                  // if (groupValue == 1) {
-                  //   bool value = await FirebaseFirestoreHelper.instance
-                  //       .uploadOrderedProductFirebase(
-                  //           appProvider.getBuyProductList,
-                  //           context,
-                  //           "Cash On Delievery");
-                  //   appProvider.clearBuyProduct();
-                  //   if (value) {
-                  //     Future.delayed(const Duration(seconds: 4), () {
-                  //       Routes.instance.push(
-                  //         const CustomBottomBar(),
-                  //         context,
-                  //       );
-                  //     });
-                  //   } else {
-                  //     print("hello");
-                  //     double totalprice = appProvider.totalPrice() * 100;
-                  //     bool isSuccessfullyPayment = await StripeHelper.instance
-                  //         .makePayment(totalprice.toString());
-                  //     if (isSuccessfullyPayment) {
-                  //       bool value = await FirebaseFirestoreHelper.instance
-                  //           .uploadOrderedProductFirebase(
-                  //               appProvider.getBuyProductList, context, "paid");
-                  //       appProvider.clearBuyProduct();
-                  //       if (value) {
-                  //         Future.delayed(const Duration(seconds: 2), () {
-                  //           Routes.instance
-                  //               .push(const CustomBottomBar(), context);
-                  //         });
-                  //       }
-                  //     }
-                  //   }
-                  // }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlueAccent,

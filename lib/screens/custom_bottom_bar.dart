@@ -6,6 +6,7 @@ import 'package:tech_trove_shop/screens/favourate_screen.dart';
 import 'package:tech_trove_shop/screens/home.dart';
 
 class CustomBottomBar extends StatefulWidget {
+  // ignore: use_super_parameters
   const CustomBottomBar({
     final Key? key,
   }) : super(key: key);

@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
@@ -7,6 +9,7 @@ import 'package:tech_trove_shop/constants/routes.dart';
 import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
 import 'package:tech_trove_shop/screens/home.dart';
 import 'package:tech_trove_shop/widget/custom_textfield.dart';
+import 'package:tech_trove_shop/widget/email_verification_widget.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});
@@ -119,9 +122,14 @@ class SignUp extends StatelessWidget {
                             .signUp(email.text, password.text, name.text,
                                 streetAddress.text, context);
                         if (isSignedIn) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const EmailSendVerificationDialog();
+                              });
                           //means the firebase service is been called so navigate to homepage.
-                          Routes().pushAndRemoveUntil(
-                              const CustomBottomBar(), context);
+                          // Routes().pushAndRemoveUntil(
+                          //     const CustomBottomBar(), context);
                           //push and remove until means navigate to next screen but comming back is not possible.
                         }
                       }
