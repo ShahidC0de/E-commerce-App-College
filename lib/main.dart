@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
 import 'package:tech_trove_shop/provider/app_provider.dart';
 import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
-import 'package:tech_trove_shop/screens/login.dart';
 import 'package:tech_trove_shop/screens/signup.dart';
 import 'package:tech_trove_shop/widget/email_verification_widget.dart';
 import 'firebase_options.dart';
