@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
 import 'package:tech_trove_shop/provider/app_provider.dart';
 import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
+import 'package:tech_trove_shop/screens/login.dart';
+import 'package:tech_trove_shop/screens/signup.dart';
+import 'package:tech_trove_shop/widget/email_verification_widget.dart';
 import 'firebase_options.dart';
 
 import 'package:tech_trove_shop/screens/welcome.dart';
@@ -37,12 +40,49 @@ class MyApp extends StatelessWidget {
           home: StreamBuilder(
               stream: FirebaseAuthHelper.instance.getAuthChange,
               builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Scaffold(
+                    body: Column(
+                      children: [
+                        Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.lightBlueAccent,
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                }
                 if (snapshot.hasData) {
-                  // ignore: unused_local_variable
-                  bool isEmailVerified =
-                      FirebaseAuth.instance.currentUser!.emailVerified;
-                  if (FirebaseAuth.instance.currentUser!.emailVerified) {
+                  User? currentUser = FirebaseAuth.instance.currentUser;
+
+                  if (currentUser!.emailVerified) {
                     return const CustomBottomBar();
+                  } else if (snapshot.hasData &&
+                      currentUser.emailVerified == false) {
+                    return Scaffold(
+                      body: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Center(
+                            child: EmailSendVerificationDialog(),
+                          ),
+                          BottomAppBar(
+                            child: TextButton(
+                              onPressed: () async {
+                                await currentUser.delete();
+                                // ignore: use_build_context_synchronously
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(builder: (context) {
+                                  return const SignUp();
+                                }));
+                              },
+                              child: const Text('Sign Up with another email?'),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
                   } else {
                     return const Welcome();
                   }

@@ -65,7 +65,7 @@ class _EmailSendVerificationDialogState
               onPressed: () async {
                 await FirebaseAuthHelper.instance.verifyTheUser();
                 _timer.cancel();
-                remainingSeconds == 60;
+                remainingSeconds = 60;
                 startTimer();
                 setState(() {});
               },

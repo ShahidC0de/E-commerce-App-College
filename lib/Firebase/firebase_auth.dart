@@ -19,8 +19,17 @@ class FirebaseAuthHelper {
   //SIGNING IN THE USER IF HAVE AN ALREADY AN ACCOUNT;
   Future<void> verifyTheUser() async {
     await _auth.currentUser!.sendEmailVerification();
-    await Future.delayed(const Duration(seconds: 30));
-    _auth.currentUser!.reload();
+    const maXDuration = Duration(seconds: 60);
+    final sTartTime = DateTime.now();
+    while (!_auth.currentUser!.emailVerified) {
+      if (DateTime.now().difference(sTartTime) > maXDuration) {
+        print('email verification time reached');
+      }
+      {
+        await Future.delayed(const Duration(seconds: 1));
+        await _auth.currentUser!.reload();
+      }
+    }
   }
 
   Future<bool> login(

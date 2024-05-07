@@ -6,7 +6,6 @@ import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
 import 'package:tech_trove_shop/constants/routes.dart';
 import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
-import 'package:tech_trove_shop/screens/home.dart';
 import 'package:tech_trove_shop/screens/signup.dart';
 import 'package:tech_trove_shop/widget/custom_textfield.dart';
 
