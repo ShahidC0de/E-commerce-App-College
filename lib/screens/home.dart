@@ -85,22 +85,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Home',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 26),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(
-                                  Icons.edit_location_rounded,
-                                  size: 30,
-                                )
-                              ],
+                              children: [],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -114,9 +99,9 @@ class _HomePageState extends State<HomePage> {
 
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: Colors.grey,
+                                        color: Colors.lightBlueAccent,
                                       ),
-                                      color: Colors.grey,
+                                      color: Colors.lightBlueAccent,
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                     child: TextFormField(
@@ -141,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                                           prefixIcon: const Icon(
                                             //putting an icon.
                                             Icons.search,
-                                            color: Colors.black,
+                                            color: Colors.white,
                                           ),
                                           border: OutlineInputBorder(
                                             borderSide: const BorderSide(

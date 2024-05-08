@@ -103,18 +103,14 @@ class _AccountScreenState extends State<AccountScreen> {
                 CustomListTile(
                   leadingIcon: const Icon(Icons.info_outline),
                   title: 'About us..',
-                  onTap: () {
-                    Routes().push(const FavourateScreen(), context);
-                  },
+                  onTap: () {},
                 ),
                 CustomListTile(
                   leadingIcon: const Icon(
                     Icons.support,
                   ),
                   title: 'Support',
-                  onTap: () {
-                    Routes().push(const FavourateScreen(), context);
-                  },
+                  onTap: () {},
                 ),
                 CustomListTile(
                   leadingIcon: const Icon(
