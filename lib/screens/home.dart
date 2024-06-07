@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                                           //EMAIL TEXTFORM FILED
                                           hintText: "Search..",
                                           hintStyle: const TextStyle(
-                                            color: Colors.grey,
+                                            color: Colors.white,
                                           ),
                                           prefixIcon: const Icon(
                                             //putting an icon.

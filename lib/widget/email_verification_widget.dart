@@ -52,12 +52,12 @@ class _EmailSendVerificationDialogState
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.white,
-      title: Text('Email Verification ${remainingSeconds.toString()}'),
+      title: const Text('Email Verification '),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text('After verification please restart the app'),
+          const Text('email is been sent to your account, verify your email'),
           const SizedBox(
             height: 20,
           ),

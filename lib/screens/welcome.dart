@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_trove_shop/constants/routes.dart';
 import 'package:tech_trove_shop/screens/login.dart';
@@ -30,14 +29,14 @@ class Welcome extends StatelessWidget {
             style: TextStyle(
                 color: Colors.lightBlueAccent,
                 fontWeight: FontWeight.bold,
-                fontSize: 40),
+                fontSize: 35),
           ),
           const Text(
             "Thank You For Selecting us!",
             style: TextStyle(color: Colors.grey, fontSize: 10),
           ),
           const SizedBox(
-            height: 48.0,
+            height: 30.0,
           ),
           SizedBox(
             width: 200,
@@ -59,7 +58,7 @@ class Welcome extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 12.0,
+            height: 8.0,
           ),
           SizedBox(
             height: 60,
@@ -88,27 +87,6 @@ class Welcome extends StatelessWidget {
               color: Colors.grey,
               fontSize: 10,
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CupertinoButton(
-                  child: const Icon(
-                    Icons.facebook,
-                    size: 45,
-                    color: Colors.lightBlueAccent,
-                  ),
-                  onPressed: () {}),
-              const SizedBox(
-                width: 0.5,
-              ),
-              CupertinoButton(
-                  onPressed: () {},
-                  child: Image.asset(
-                    "assets/icons/google.png",
-                    scale: 2.0,
-                  )),
-            ],
           ),
         ],
       ),

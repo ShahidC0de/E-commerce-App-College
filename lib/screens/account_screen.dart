@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
@@ -37,15 +38,38 @@ class _AccountScreenState extends State<AccountScreen> {
             child: Column(
               children: [
                 appProvider.getUserInformation.image == null
-                    ? const Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                        size: 120,
+                    ? Stack(
+                        children: [
+                          const Icon(
+                            Icons.person,
+                            color: Colors.grey,
+                            size: 120,
+                          ),
+                          CupertinoButton(
+                              alignment: Alignment.bottomRight,
+                              child: const Icon(Icons.edit),
+                              onPressed: () {
+                                Routes().push(const EditProfile(), context);
+                              })
+                        ],
                       )
-                    : CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(appProvider.getUserInformation.image!),
-                        radius: 60,
+                    : Stack(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                appProvider.getUserInformation.image!),
+                            radius: 60,
+                          ),
+                          CupertinoButton(
+                              alignment: Alignment.topRight,
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                Routes().push(const EditProfile(), context);
+                              })
+                        ],
                       ),
                 Text(
                   appProvider.getUserInformation.name,
@@ -61,79 +85,65 @@ class _AccountScreenState extends State<AccountScreen> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(
-                  width: 130,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.lightBlueAccent,
-                      ),
-                      onPressed: () {
-                        Routes().push(const EditProfile(), context);
-                      },
-                      child: const Text(
-                        "Edit",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      )),
-                )
               ],
             ),
           ),
           Expanded(
             flex: 2,
-            child: Column(
-              children: [
-                CustomListTile(
-                  leadingIcon: const Icon(Icons.shopping_bag_outlined),
-                  title: "Orders",
-                  onTap: () {
-                    Routes().push(const OrderScreen(), context);
-                  },
-                ),
-                CustomListTile(
-                  leadingIcon: const Icon(
-                    Icons.favorite_outline,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CustomListTile(
+                    leadingIcon: const Icon(Icons.shopping_bag_outlined),
+                    title: "Orders",
+                    onTap: () {
+                      Routes().push(const OrderScreen(), context);
+                    },
                   ),
-                  title: 'Favourates',
-                  onTap: () {
-                    Routes().push(const FavourateScreen(), context);
-                  },
-                ),
-                CustomListTile(
-                  leadingIcon: const Icon(Icons.info_outline),
-                  title: 'About us..',
-                  onTap: () {},
-                ),
-                CustomListTile(
-                  leadingIcon: const Icon(
-                    Icons.support,
+                  CustomListTile(
+                    leadingIcon: const Icon(
+                      Icons.favorite_outline,
+                    ),
+                    title: 'Favourates',
+                    onTap: () {
+                      Routes().push(const FavourateScreen(), context);
+                    },
                   ),
-                  title: 'Support',
-                  onTap: () {},
-                ),
-                CustomListTile(
-                  leadingIcon: const Icon(
-                    Icons.security_outlined,
+                  CustomListTile(
+                    leadingIcon: const Icon(Icons.info_outline),
+                    title: 'About us..',
+                    onTap: () {},
                   ),
-                  title: 'Change Password',
-                  onTap: () {
-                    Routes().push(const ChangePassword(), context);
-                  },
-                ),
-                CustomListTile(
-                  leadingIcon: const Icon(
-                    Icons.logout_outlined,
+                  CustomListTile(
+                    leadingIcon: const Icon(
+                      Icons.support,
+                    ),
+                    title: 'Support',
+                    onTap: () {},
                   ),
-                  title: 'Logout',
-                  onTap: () {
-                    FirebaseAuthHelper.instance.signOut();
-                  },
-                ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-              ],
+                  CustomListTile(
+                    leadingIcon: const Icon(
+                      Icons.security_outlined,
+                    ),
+                    title: 'Change Password',
+                    onTap: () {
+                      Routes().push(const ChangePassword(), context);
+                    },
+                  ),
+                  CustomListTile(
+                    leadingIcon: const Icon(
+                      Icons.logout_outlined,
+                    ),
+                    title: 'Logout',
+                    onTap: () {
+                      FirebaseAuthHelper.instance.signOut();
+                    },
+                  ),
+                  const SizedBox(
+                    height: 12.0,
+                  ),
+                ],
+              ),
             ),
           ),
         ],

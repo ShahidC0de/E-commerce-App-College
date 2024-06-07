@@ -23,6 +23,7 @@ class FirebaseAuthHelper {
     final sTartTime = DateTime.now();
     while (!_auth.currentUser!.emailVerified) {
       if (DateTime.now().difference(sTartTime) > maXDuration) {
+        // ignore: avoid_print
         print('email verification time reached');
       }
       {
