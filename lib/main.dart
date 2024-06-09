@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,6 @@ import 'package:tech_trove_shop/provider/app_provider.dart';
 import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
 import 'package:tech_trove_shop/screens/signup.dart';
 import 'package:tech_trove_shop/widget/email_verification_widget.dart';
-import 'firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:tech_trove_shop/screens/welcome.dart';
@@ -20,9 +21,20 @@ void main() async {
   await dotenv.load(fileName: '.env');
   final stripeKey = dotenv.env['STRIPE_KEY'] ?? "";
   Stripe.publishableKey = stripeKey;
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  try {
+    final api_key = dotenv.env["ANDROID_API_KEY"] ?? "";
+    //firebase was returning a null value, so this helped to solve the problem;
+    Platform.isAndroid
+        ? await Firebase.initializeApp(
+            options: FirebaseOptions(
+                apiKey: api_key,
+                appId: "1:973121984053:android:eb57c772b96d8a919b437c",
+                messagingSenderId: "973121984053",
+                projectId: "tech-trove-shop-3ea50"),
+          )
+        : await Firebase.initializeApp();
+  } catch (_) {}
+
   runApp(const MyApp());
 }
 
