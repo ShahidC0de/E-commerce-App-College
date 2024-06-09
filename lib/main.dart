@@ -9,6 +9,7 @@ import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
 import 'package:tech_trove_shop/screens/signup.dart';
 import 'package:tech_trove_shop/widget/email_verification_widget.dart';
 import 'firebase_options.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:tech_trove_shop/screens/welcome.dart';
 
@@ -16,8 +17,9 @@ void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // firebase initialization is important before using firebase services.
   // mainly it can be done in main function.
-  Stripe.publishableKey =
-      'pk_test_51O8mRyJdUwUvJDm6x2CmN6xNYUtgPXnMbVh8x93rWdJuBdYBMrZj2V2gZRu5HaKV8Hp5n9dVcpE8lsF2a9VP7Z7V0072mReMoQ';
+  await dotenv.load(fileName: '.env');
+  final stripeKey = dotenv.env['STRIPE_KEY'] ?? "";
+  Stripe.publishableKey = stripeKey;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

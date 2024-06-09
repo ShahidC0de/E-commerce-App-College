@@ -41,3 +41,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+# ignore .env file
+.env
+# ignore google-services.json file
+google-services.json
+

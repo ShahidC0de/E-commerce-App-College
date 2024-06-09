@@ -48,6 +48,8 @@ dependencies:
   flutter_stripe: ^10.0.0
   http: ^1.1.2
   flutter_native_splash: ^2.3.9
+  dotenv: ^4.2.0
+  flutter_dotenv: ^5.1.0
   
   
 
@@ -98,6 +100,7 @@ flutter:
   assets:
       - assets/images/
       - assets/icons/
+      - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
