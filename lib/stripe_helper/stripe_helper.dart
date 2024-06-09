@@ -72,7 +72,7 @@ class StripeHelper {
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
-          'Authorization': authorizationkey,
+          'Authorization': authorizationkey, // in .env file ....
         },
         body: body,
       );

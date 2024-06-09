@@ -19,8 +19,9 @@ void main() async {
       .ensureInitialized(); // firebase initialization is important before using firebase services.
   // mainly it can be done in main function.
   await dotenv.load(fileName: '.env');
-  final stripeKey = dotenv.env['STRIPE_KEY'] ?? "";
-  Stripe.publishableKey = stripeKey;
+  final stripeKey = dotenv.env['STRIPE_KEY'] ??
+      ""; // create .env file in the root folder of project and place your api_key.
+  Stripe.publishableKey = stripeKey; // also stripe_key in .env file.
   try {
     final api_key = dotenv.env["ANDROID_API_KEY"] ?? "";
     //firebase was returning a null value, so this helped to solve the problem;
