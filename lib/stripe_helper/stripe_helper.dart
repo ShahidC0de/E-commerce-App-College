@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 
@@ -66,14 +67,12 @@ class StripeHelper {
         'amount': amount,
         'currency': currency,
       };
+      final authorizationkey = dotenv.env['AUTHORIZATION_KEY'] ?? "";
 
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
-          'Authorization':
-              'Bearer sk_test_51O8mRyJdUwUvJDm67xxGKWybSFXo2xnSFW2JV144nreRbNu2ZlmLVPGm2l6WojOiblOQB1OWsqprYHLulUi2Xsfh00ye0RSZWw',
-          //     'Bearer sk_test_51MWx8OAVMyklfe3C3gP4wKOhTsRdF6r1PYhhg1PqupXDITMrV3asj5Mmf0G5F9moPL6zNfG3juK8KHgV9XNzFPlq00wmjWwZYA',
-          // 'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': authorizationkey,
         },
         body: body,
       );
