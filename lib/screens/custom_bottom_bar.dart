@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:tech_trove_shop/screens/account_screen.dart';
 import 'package:tech_trove_shop/screens/cart_screen.dart';
 import 'package:tech_trove_shop/screens/favourate_screen.dart';
@@ -19,7 +19,6 @@ class CustomBottomBar extends StatefulWidget {
 class _CustomBottomBarState extends State<CustomBottomBar> {
   final PersistentTabController _controller = PersistentTabController();
   // ignore: prefer_final_fields
-  bool _hideNavBar = false;
 
   List<Widget> _buildScreens() => [
         const HomePage(),
@@ -78,16 +77,8 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
               : kBottomNavigationBarHeight,
           bottomScreenMargin: 0,
 
-          backgroundColor: Colors.lightBlueAccent,
-          hideNavigationBar: _hideNavBar,
           decoration: const NavBarDecoration(colorBehindNavBar: Colors.indigo),
-          itemAnimationProperties: const ItemAnimationProperties(
-            duration: Duration(milliseconds: 400),
-            curve: Curves.ease,
-          ),
-          screenTransitionAnimation: const ScreenTransitionAnimation(
-            animateTabTransition: true,
-          ),
+
           navBarStyle:
               NavBarStyle.style1, // Choose the nav bar style with this property
         ),

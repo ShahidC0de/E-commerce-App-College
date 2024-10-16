@@ -70,7 +70,7 @@ class FirebaseFirestoreHelper {
             .doc(FirebaseAuth.instance.currentUser?.uid)
             .get();
 
-    return UserModel.fronJson(querySnapshot.data()!);
+    return UserModel.fromJson(querySnapshot.data()!);
   }
 
   Future<bool> uploadOrderedProductFirebase(
@@ -96,7 +96,7 @@ class FirebaseFirestoreHelper {
       DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
           await _firebaseFirestore.collection('users').doc(uid).get();
       Map<String, dynamic> userData = documentSnapshot.data()!;
-      UserModel user = UserModel.fronJson((userData));
+      UserModel user = UserModel.fromJson((userData));
 
       admin.set({
         "products": list.map((e) => e.toJson()).toList(),

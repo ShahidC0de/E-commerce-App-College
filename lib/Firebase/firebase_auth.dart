@@ -55,28 +55,57 @@ class FirebaseAuthHelper {
   //THIS FOR CREATING A USER IN DATABASE;
   Future<bool> signUp(String email, String password, String name,
       String streetAddress, BuildContext context) async {
-    //build context is taking blueprint of something like next screen or something etc..
-    //using try and catch method.
     try {
       showLoaderDialog(context);
+
+      // Step 1: Attempt user authentication
       UserCredential? userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
+      // Check if userCredential is valid
+      if (userCredential == null || userCredential.user == null) {
+        print("Authentication failed, userCredential is null.");
+        return false;
+      }
+
+      // Step 2: Create UserModel
       UserModel userModel = UserModel(
-          id: userCredential.user!.uid,
-          name: name,
-          email: email,
-          streetAddress: streetAddress,
-          image: null);
-      _firestore.collection("users").doc(userModel.id).set(userModel.toJson());
-      //when the user authentiction successfull, stop the loader dialog.
+        id: userCredential.user!.uid,
+        name: name,
+        email: email,
+        streetAddress: streetAddress,
+        image: null,
+      );
+
+      // Log the UserModel before storing it
+      print("UserModel to be stored: ${userModel.toJson()}");
+
+      // Step 3: Save user data to Firestore
+      await _firestore
+          .collection("users")
+          .doc(userModel.id)
+          .set(userModel.toJson())
+          .then((_) {
+        print("User data successfully written to Firestore.");
+      }).catchError((error) {
+        print("Error writing user data to Firestore: $error");
+        throw error;
+      });
+
+      // Step 4: Stop the loader and return success
       Navigator.of(context).pop();
       return true;
-      //in case of some error ...
     } on FirebaseAuthException catch (error) {
-      Navigator.of(context).pop(); //stepping back
-      showMessage(getMessageFromErrorCode(
-          error.code.toString())); //showing exception error code
+      // Stop the loader and show error message
+      Navigator.of(context).pop();
+      print("FirebaseAuthException: ${error.code}");
+      showMessage(getMessageFromErrorCode(error.code.toString()));
+      return false;
+    } catch (error) {
+      // Catch any other errors
+      Navigator.of(context).pop();
+      print("General error: $error");
+      showMessage("An error occurred. Please try again.");
       return false;
     }
   }
