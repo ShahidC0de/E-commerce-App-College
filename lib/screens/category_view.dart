@@ -15,17 +15,16 @@ class CategoryView extends StatefulWidget {
 
 class _CategoryViewState extends State<CategoryView> {
   List<ProductModel> productModelList = [];
-
   bool isLoading = false;
+
   void getCategoriesList1() async {
     setState(() {
       isLoading = true;
     });
     productModelList = await FirebaseFirestoreHelper.instance
         .getCategoryViewProduct(widget.categoryModel.id);
-    productModelList.shuffle(); //to access random items.
+    productModelList.shuffle(); // Randomize product order
 
-    productModelList.shuffle();
     setState(() {
       isLoading = false;
     });
@@ -33,107 +32,158 @@ class _CategoryViewState extends State<CategoryView> {
 
   @override
   void initState() {
-    getCategoriesList1();
     super.initState();
+    getCategoriesList1();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoading
-          ? Center(
-              child: Container(
-                height: 100,
-                width: 100,
-                alignment: Alignment.center,
-                child: const CircularProgressIndicator(),
-              ),
-            )
-          : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: kToolbarHeight,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        const BackButton(),
-                        Text(
-                          widget.categoryModel.name,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                  productModelList.isEmpty
-                      ? const Center(
-                          child: Text("No product available"),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(top: 12.0, left: 12.0),
-                          child: GridView.builder(
-                              padding: EdgeInsets.zero,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.lightBlueAccent.withOpacity(0.8),
+              Colors.white.withOpacity(0.9),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 2.5,
+                ),
+              )
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: kToolbarHeight),
+                      Row(
+                        children: [
+                          const BackButton(color: Colors.white),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              widget.categoryModel.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      productModelList.isEmpty
+                          ? const Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: Text(
+                                  "No products available",
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : GridView.builder(
+                              padding: const EdgeInsets.only(top: 12.0),
                               shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: productModelList.length,
                               gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisSpacing: 20.0,
-                                      mainAxisSpacing: 20.0,
-                                      childAspectRatio: 0.7,
-                                      crossAxisCount: 2),
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisSpacing: 15.0,
+                                mainAxisSpacing: 15.0,
+                                childAspectRatio: 0.7,
+                                crossAxisCount:
+                                    MediaQuery.of(context).size.width > 600
+                                        ? 3
+                                        : 2, // Responsive grid count
+                              ),
                               itemBuilder: (ctx, index) {
-                                ProductModel singleproduct =
+                                ProductModel singleProduct =
                                     productModelList[index];
                                 return InkWell(
                                   onTap: () {
                                     Routes().push(
-                                        ProductDetails(
-                                          singleProduct: singleproduct,
-                                        ),
-                                        context);
+                                      ProductDetails(
+                                          singleProduct: singleProduct),
+                                      context,
+                                    );
                                   },
-                                  child: Container(
-                                    color: Colors.white.withOpacity(0.3),
-                                    child: Column(
-                                      children: [
-                                        const SizedBox(
-                                          height: 12.0,
-                                        ),
-                                        Image.network(
-                                          singleproduct.image,
-                                          height: 60,
-                                          width: 60,
-                                        ),
-                                        const SizedBox(
-                                          height: 12.0,
-                                        ),
-                                        Text(
-                                          singleproduct.name,
-                                          style: const TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.bold,
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Colors.white,
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(height: 10.0),
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            child: Image.network(
+                                              singleProduct.image,
+                                              height: 120,
+                                              width: 120,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                        Text(" Rs : ${singleproduct.price}"),
-                                        const SizedBox(
-                                          height: 6.0,
-                                        ),
-                                      ],
+                                          const SizedBox(height: 10.0),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: Text(
+                                              singleProduct.name,
+                                              style: const TextStyle(
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black87,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8.0),
+                                          Text(
+                                            "Rs: ${singleProduct.price}",
+                                            style: const TextStyle(
+                                              color: Colors.lightBlueAccent,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10.0),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );
-                              }),
-                        ),
-                  const SizedBox(
-                    height: 12.0,
-                  )
-                ],
+                              },
+                            ),
+                      const SizedBox(height: 20.0),
+                    ],
+                  ),
+                ),
               ),
-            ),
+      ),
     );
   }
 }

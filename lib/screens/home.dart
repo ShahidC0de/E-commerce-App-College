@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_trove_shop/Firebase/firebase_firestore.dart';
@@ -18,17 +17,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<CategoryModel> categoriesList1 = [];
-
   List<ProductModel> productModelList = [];
-
   bool isLoading = false;
+
   @override
   void initState() {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
     appProvider.getUserInfoFirebase();
-
     getCategories1();
-
     super.initState();
   }
 
@@ -38,9 +34,8 @@ class _HomePageState extends State<HomePage> {
     });
     FirebaseFirestoreHelper.instance.updateTokenFromFirebase();
     categoriesList1 = await FirebaseFirestoreHelper.instance.getCategories1();
-
     productModelList = await FirebaseFirestoreHelper.instance.getProducts();
-    productModelList.shuffle(); // for random randering..
+    productModelList.shuffle(); // Randomize products for better user experience
     setState(() {
       isLoading = false;
     });
@@ -48,6 +43,7 @@ class _HomePageState extends State<HomePage> {
 
   TextEditingController search = TextEditingController();
   List<ProductModel> searchList = [];
+
   void searchProducts(String value) {
     searchList = productModelList
         .where((element) =>
@@ -58,177 +54,207 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the width of the screen
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    // Determine the number of columns for the grid based on the screen width
+    int crossAxisCount = screenWidth > 600
+        ? 3
+        : 2; // 3 columns for tablets and above, 2 for phones
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: isLoading
-            ? Center(
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  alignment: Alignment.topCenter,
-                  child: const CircularProgressIndicator(
-                    color: Colors.blueAccent,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.lightBlueAccent,
+              Colors.blueAccent,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: isLoading
+              ? Center(
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    alignment: Alignment.topCenter,
+                    child: const CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              )
-            : Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: kToolbarHeight - 15,
-                        ),
-                        Column(
-                          children: [
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: 50, //size of textformfield,
-                                    width: double.infinity,
-
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.lightBlueAccent,
+                )
+              : Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: kToolbarHeight - 15),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.4),
+                                            spreadRadius: 2,
+                                            blurRadius: 10,
+                                          ),
+                                        ],
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Colors.lightBlueAccent,
+                                            Colors.blueAccent,
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        borderRadius: BorderRadius.circular(15),
                                       ),
-                                      color: Colors.lightBlueAccent,
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: TextFormField(
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                      controller: search,
-                                      onChanged: (String value) {
-                                        searchProducts(value);
-                                      },
-                                      keyboardType: TextInputType.name,
-                                      decoration: InputDecoration(
+                                      child: TextFormField(
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                        controller: search,
+                                        onChanged: (String value) {
+                                          searchProducts(value);
+                                        },
+                                        keyboardType: TextInputType.name,
+                                        decoration: InputDecoration(
                                           contentPadding:
-                                              const EdgeInsets.all(2),
-
-                                          //decoration of textformfield.
-                                          //EMAIL TEXTFORM FILED
-                                          hintText: "Search..",
+                                              const EdgeInsets.all(8),
+                                          hintText: "Search...",
                                           hintStyle: const TextStyle(
-                                            color: Colors.white,
+                                            color: Colors.white70,
                                           ),
                                           prefixIcon: const Icon(
-                                            //putting an icon.
                                             Icons.search,
                                             color: Colors.white,
                                           ),
-                                          border: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              color: Colors.lightBlueAccent,
-                                            ),
+                                          enabledBorder: OutlineInputBorder(
                                             borderRadius:
-                                                BorderRadius.circular(15.0),
+                                                BorderRadius.circular(15),
+                                            borderSide: BorderSide.none,
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                              width: 2,
-                                              color: Colors.lightBlueAccent,
-                                            ),
                                             borderRadius:
-                                                BorderRadius.circular(15.0),
-                                          )),
+                                                BorderRadius.circular(15),
+                                            borderSide: BorderSide.none,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 12.0,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        //CATEGORYLIST.MAP((E)=>NULL).TO LIST, organized in a way in which images in the database is been uploaded in the card widget, although it is in padding to look more good, but its card widget.
-                        categoriesList1.isEmpty
-                            ? const Center(
-                                child: Text("List is not available"),
-                              )
-                            : SingleChildScrollView(
-                                scrollDirection: Axis
-                                    .horizontal, //use to scroll in the left/right direction.
-                                //normally single child scroll view scroll from top to bottom,bottom to top whatever....
-                                child: Row(
-                                  // in a row...
-                                  children: categoriesList1
-                                      //children in a row.. mapping into cards which are placed in row structure.
-                                      .map((e) => Padding(
-                                            padding: const EdgeInsets.all(2.0),
-                                            child: CupertinoButton(
-                                              onPressed: () {
-                                                Routes.instance.push(
-                                                    CategoryView(
-                                                        categoryModel: e),
-                                                    context);
-                                              },
-                                              child: Card(
-                                                color: Colors.white,
-                                                elevation: 10.0,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20.0),
-                                                ),
-                                                child: SizedBox(
-                                                  //the space given to a single card.
-                                                  height: 80,
-                                                  width: 80,
-                                                  child: Image.network(e.image),
-                                                  //the child of card which is image/image.network is use to access internet for the link.
+                                  const SizedBox(width: 10),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 15),
+
+                          // Category List with Cards
+                          categoriesList1.isEmpty
+                              ? const Center(
+                                  child: Text("Categories not available"))
+                              : SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: categoriesList1
+                                        .map((category) => Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8.0),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Routes.instance.push(
+                                                      CategoryView(
+                                                          categoryModel:
+                                                              category),
+                                                      context);
+                                                },
+                                                child: Card(
+                                                  color: Colors.white,
+                                                  elevation: 5.0,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.0),
+                                                  ),
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    width: 90,
+                                                    height: 90,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Image.network(
+                                                            category.image,
+                                                            height: 50),
+                                                        const SizedBox(
+                                                            height: 5),
+                                                        Text(
+                                                          category.name,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                            color:
+                                                                Colors.black87,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ))
-                                      .toList(), //to a list.....
+                                            ))
+                                        .toList(),
+                                  ),
                                 ),
-                              ),
 
-                        const Text(
-                          "Products",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23.0,
-                            color: Colors.black,
+                          const SizedBox(height: 10),
+                          const Text(
+                            "Products",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 23.0,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
-                  search.text.isNotEmpty && searchList.isEmpty
-                      ? const Center(
-                          child: Text("No Product Found"),
-                        )
-                      : searchList.isNotEmpty
-                          ? Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: GridView.builder(
+                    const SizedBox(height: 12.0),
+                    search.text.isNotEmpty && searchList.isEmpty
+                        ? const Center(child: Text("No Product Found"))
+                        : searchList.isNotEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: GridView.builder(
                                   padding: const EdgeInsets.only(bottom: 50.0),
                                   shrinkWrap: true,
                                   primary: false,
                                   itemCount: searchList.length,
                                   gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisSpacing: 20,
-                                          mainAxisSpacing: 20,
-                                          childAspectRatio: 0.9,
-                                          crossAxisCount: 2),
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisSpacing: 15,
+                                    mainAxisSpacing: 15,
+                                    childAspectRatio: 0.8,
+                                    crossAxisCount: crossAxisCount,
+                                  ),
                                   itemBuilder: (ctx, index) {
                                     ProductModel singleProduct =
                                         searchList[index];
@@ -240,52 +266,68 @@ class _HomePageState extends State<HomePage> {
                                             context);
                                       },
                                       child: Container(
-                                        color: Colors.white,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.2),
+                                              spreadRadius: 2,
+                                              blurRadius: 5,
+                                            ),
+                                          ],
+                                        ),
                                         child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
-                                            Image.network(
-                                              singleProduct.image,
-                                              height: 120,
-                                              width: 120,
-                                            ),
-                                            const SizedBox(
-                                              height: 12.0,
-                                            ),
+                                            Image.network(singleProduct.image,
+                                                height: 120, width: 120),
+                                            const SizedBox(height: 10),
                                             Text(
                                               singleProduct.name,
                                               style: const TextStyle(
-                                                fontSize: 10.0,
+                                                fontSize: 14.0,
                                                 color: Colors.black,
+                                                fontWeight: FontWeight.w600,
                                               ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                            Text("Rs: ${singleProduct.price}"),
-                                            const SizedBox(
-                                              height: 6.0,
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              "Rs: ${singleProduct.price}",
+                                              style: const TextStyle(
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ],
                                         ),
                                       ),
                                     );
-                                  }),
-                            )
-                          : productModelList.isEmpty
-                              ? const Center(
-                                  child: Text("No products available"),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: GridView.builder(
+                                  },
+                                ),
+                              )
+                            : productModelList.isEmpty
+                                ? const Center(
+                                    child: Text("No products available"))
+                                : Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: GridView.builder(
                                       padding:
                                           const EdgeInsets.only(bottom: 50.0),
                                       shrinkWrap: true,
                                       primary: false,
                                       itemCount: productModelList.length,
                                       gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisSpacing: 20,
-                                              mainAxisSpacing: 20,
-                                              childAspectRatio: 0.9,
-                                              crossAxisCount: 2),
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisSpacing: 15,
+                                        mainAxisSpacing: 15,
+                                        childAspectRatio: 0.8,
+                                        crossAxisCount: crossAxisCount,
+                                      ),
                                       itemBuilder: (ctx, index) {
                                         ProductModel singleProduct =
                                             productModelList[index];
@@ -298,89 +340,56 @@ class _HomePageState extends State<HomePage> {
                                                 context);
                                           },
                                           child: Container(
-                                            color: Colors.white,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.2),
+                                                  spreadRadius: 2,
+                                                  blurRadius: 5,
+                                                ),
+                                              ],
+                                            ),
                                             child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Image.network(
-                                                  singleProduct.image,
-                                                  height: 80,
-                                                  width: 80,
-                                                ),
-                                                const SizedBox(
-                                                  height: 12.0,
-                                                ),
+                                                    singleProduct.image,
+                                                    height: 120,
+                                                    width: 120),
+                                                const SizedBox(height: 10),
                                                 Text(
                                                   singleProduct.name,
                                                   style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12.0,
+                                                    fontSize: 14.0,
                                                     color: Colors.black,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  "Rs: ${singleProduct.price}",
+                                                  style: const TextStyle(
+                                                    color: Colors.black87,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                                Text(
-                                                    "Rs: ${singleProduct.price}"),
                                               ],
                                             ),
                                           ),
                                         );
-                                      }),
-                                )
-                ],
-              ),
+                                      },
+                                    ),
+                                  ),
+                  ],
+                ),
+        ),
       ),
     );
   }
 }
-
-//products list
-// List<ProductModel> products = [
-//   ProductModel(
-//       image:
-//           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG9_nT235vTvNx0b6W7se0liR3DyevIa3Axw&usqp=CAU",
-//       id: "1",
-//       name: "Dell Laptop",
-//       price: 12000,
-//       description:
-//           "One of the dominating company Dell new core i5 8th generation",
-//       isFavourate: false), //Laptop
-//   ProductModel(
-//       image:
-//           "https://fattanicomputers.com/wp-content/uploads/2023/11/hp-laptops.png",
-//       id: "2",
-//       name: "hp Laptop",
-//       price: 13000,
-//       description: "hp new laptop...",
-//       isFavourate: false), //Laptop
-//   ProductModel(
-//       image:
-//           "https://mistore.pk/cdn/shop/products/Xiaomi65WGaNCharger_Type-A_Type-C_grande.png?v=1661769873",
-//       id: "3",
-//       name: "Redmi Fast Charger",
-//       price: 3500,
-//       description: "charge the phone in 30 minutes",
-//       isFavourate: false), //chargers
-//   ProductModel(
-//       image:
-//           "https://shahalami.pk/cdn/shop/products/Untitled-1_d0b0ecbe-3aef-462d-a468-197aa6ce4317_992x.png?v=1675679681",
-//       id: "4",
-//       name: "Charger",
-//       price: 1200,
-//       description: "compartable charger",
-//       isFavourate: false), //chargers
-//   ProductModel(
-//       image:
-//           "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1666350161.25983265.png",
-//       id: "5",
-//       name: "Redmi Note 11",
-//       price: 50000,
-//       description: "Announcing new note 11 phone redmi",
-//       isFavourate: false), //phones
-//   ProductModel(
-//       image:
-//           "https://www.pakmobizone.pk/wp-content/uploads/2020/07/OnePlus-8-Peo-Glacial-Green-1.png",
-//       id: "6",
-//       name: "Oneplus",
-//       price: 80000,
-//       description: "octacore processor with 8gb of ram",
-//       isFavourate: false), //phones
-// ];

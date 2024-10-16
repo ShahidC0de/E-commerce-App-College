@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +16,8 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   File? image;
+  TextEditingController textEditingController = TextEditingController();
+
   void takePicture() async {
     XFile? value = await ImagePicker()
         .pickImage(source: ImageSource.gallery, imageQuality: 40);
@@ -27,11 +28,13 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  TextEditingController textEditingController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context);
+
+    // Responsive dimensions
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -44,77 +47,97 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        children: [
-          image == null
-              ? CupertinoButton(
-                  onPressed: takePicture,
-                  child: const CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      radius: 70,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.white,
-                      )),
-                )
-              : CupertinoButton(
-                  onPressed: takePicture,
-                  child: CircleAvatar(
-                    backgroundImage: FileImage(image!),
-                    radius: 70,
-                  ),
-                ),
-          const SizedBox(
-            height: 12.0,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.lightBlueAccent, Colors.lightBlue.shade100],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.grey, borderRadius: BorderRadius.circular(35)),
-            child: TextFormField(
-              controller: textEditingController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
+        ),
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+          children: [
+            Center(
+              child: image == null
+                  ? GestureDetector(
+                      onTap: takePicture,
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        radius: 70,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: takePicture,
+                      child: CircleAvatar(
+                        backgroundImage: FileImage(image!),
+                        radius: 70,
+                      ),
+                    ),
+            ),
+            const SizedBox(height: 20.0),
 
-                  //decoration of textformfield.
-                  //EMAIL TEXTFORM FILED
+            // User Name Field
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(35),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: TextFormField(
+                controller: textEditingController,
+                keyboardType: TextInputType.name,
+                decoration: InputDecoration(
                   hintText: appProvider.getUserInformation.name,
                   hintStyle: const TextStyle(
-                    color: Colors.white,
+                    color: Colors.grey,
                   ),
                   prefixIcon: const Icon(
-                    //putting an icon.
                     Icons.person_2_outlined,
-                    color: Colors.white,
+                    color: Colors.lightBlueAccent,
                   ),
+                  filled: true,
+                  fillColor: Colors.white,
                   border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.white,
-                    ),
                     borderRadius: BorderRadius.circular(35.0),
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(35.0),
                     borderSide: const BorderSide(
                       width: 2,
-                      color: Colors.white,
+                      color: Colors.lightBlueAccent,
                     ),
-                    borderRadius: BorderRadius.circular(35.0),
-                  )),
+                  ),
+                ),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 25.0,
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Container(
-            height: 60,
-            width: double.infinity,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(35)),
-            child: ElevatedButton(
+            const SizedBox(height: 30.0),
+
+            // Update Button
+            SizedBox(
+              height: 60,
+              width: screenWidth * 0.8, // 80% of screen width
+              child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlueAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(35),
+                  ),
+                  elevation: 5,
                 ),
                 onPressed: () async {
                   UserModel userModel = appProvider.getUserInformation
@@ -125,10 +148,17 @@ class _EditProfileState extends State<EditProfile> {
                   "Update",
                   style: TextStyle(
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
-                )),
-          )
-        ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20.0),
+
+            // Additional Padding for visual spacing
+            const SizedBox(height: 20.0),
+          ],
+        ),
       ),
     );
   }

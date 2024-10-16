@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
-import 'package:tech_trove_shop/constants/routes.dart';
-
 import 'package:tech_trove_shop/provider/app_provider.dart';
 import 'package:tech_trove_shop/screens/cart_checkout.dart';
-
 import 'package:tech_trove_shop/widget/single_cart_item.dart';
 
 class CartScreen extends StatefulWidget {
@@ -16,97 +13,137 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  int qty = 1;
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(context);
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        // ignore: sized_box_for_whitespace
-        bottomNavigationBar: Container(
-          height: 180.0,
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Total",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+      bottomNavigationBar: Container(
+        height: screenWidth < 600
+            ? 200.0
+            : 150.0, // Adjust height based on screen width
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.lightBlueAccent, Colors.blueAccent],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Total",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.white,
                     ),
-                    Text(
-                      "Rs${appProvider.totalPrice().toString()}",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  Text(
+                    "Rs ${appProvider.totalPrice().toString()}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.white,
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                SizedBox(
-                  height: 50,
-                  width: 350,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.lightBlueAccent,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    onPressed: () {
+                  ),
+                  onPressed: () {
+                    if (appProvider.getCartProductList.isEmpty) {
+                      showMessage("Cart is Empty");
+                    } else {
                       appProvider.clearBuyProduct();
                       appProvider.addBuyProductCartList();
                       appProvider.clearCart();
-                      if (appProvider.getBuyProductList.isEmpty) {
-                        showMessage("Cart is Empty");
-                      } else {
-                        Routes().push(const CartItemCheckOut(), context);
-                      }
-                    },
-                    child: const Text(
-                      "checkout",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CartItemCheckOut(),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text(
+                    "Checkout",
+                    style: TextStyle(
+                      color: Colors.lightBlueAccent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-        appBar: AppBar(
-          centerTitle: true,
-          //appbar a flat border on the top of screen, and one back button with it;
-          title: const Text(
-            //title of the screen on appbar;
-            "Cart ",
-            style: TextStyle(
-              color: Colors.black, //color of text;
-            ),
+      ),
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        title: const Text(
+          "Your Cart",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
           ),
-          backgroundColor: Colors.white, //color of appbar;
         ),
-        body: appProvider.getCartProductList.isEmpty
+        backgroundColor: Colors.lightBlueAccent,
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.lightBlueAccent, Colors.blueAccent],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: appProvider.getCartProductList.isEmpty
             ? const Center(
                 child: Text(
                   "Cart is Empty",
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               )
             : ListView.builder(
-                //use to render a list of items on screen;
-                itemCount: appProvider.getCartProductList
-                    .length, //the number of items to be listed;
+                itemCount: appProvider.getCartProductList.length,
                 padding: const EdgeInsets.all(12.0),
                 itemBuilder: (ctx, index) {
-                  return SingleCartItem(
-                    singleProduct: appProvider.getCartProductList[index],
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 10.0),
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: SingleCartItem(
+                      singleProduct: appProvider.getCartProductList[index],
+                    ),
                   );
-                }));
+                },
+              ),
+      ),
+    );
   }
 }

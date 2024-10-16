@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:tech_trove_shop/Firebase/firebase_auth.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
@@ -13,124 +15,135 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool isShowPassword = true;
   TextEditingController newpassword = TextEditingController();
   TextEditingController confpassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "Change Password",
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.lightBlueAccent,
+            color: Colors.white,
           ),
         ),
+        centerTitle: true,
+        backgroundColor: Colors.lightBlueAccent,
+        elevation: 0,
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(12.0),
-        children: [
-          SizedBox(
-            height: 60, //size of textformfield,
-            width: 300,
-            child: TextFormField(
-              controller: newpassword,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                  //decoration of textformfield.
-                  //EMAIL TEXTFORM FILED
-                  hintText: "New Password",
-                  hintStyle: const TextStyle(
-                    color: Colors.lightBlueAccent,
-                  ),
-                  prefixIcon: const Icon(
-                    //putting an icon.
-                    Icons.password_outlined,
-                    color: Colors.lightBlueAccent,
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.lightBlueAccent,
-                    ),
-                    borderRadius: BorderRadius.circular(40.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      width: 2,
-                      color: Colors.lightBlueAccent,
-                    ),
-                    borderRadius: BorderRadius.circular(40.0),
-                  )),
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.lightBlueAccent, Colors.blueAccent],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          const SizedBox(
-            height: 30.0,
-          ),
-          SizedBox(
-            height: 60, //size of textformfield,
-            width: 300,
-            child: TextFormField(
-              controller: confpassword,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                  //decoration of textformfield.
-                  //EMAIL TEXTFORM FILED
-                  hintText: "Confirm Password",
-                  hintStyle: const TextStyle(
-                    color: Colors.lightBlueAccent,
-                  ),
-                  prefixIcon: const Icon(
-                    //putting an icon.
-                    Icons.password_outlined,
-                    color: Colors.lightBlueAccent,
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.lightBlueAccent,
-                    ),
-                    borderRadius: BorderRadius.circular(40.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      width: 2,
-                      color: Colors.lightBlueAccent,
-                    ),
-                    borderRadius: BorderRadius.circular(40.0),
-                  )),
-            ),
-          ),
-          const SizedBox(
-            height: 30.0,
-          ),
-          SizedBox(
-            //Login button
-            width: 200,
-            height: 60,
-            child: ElevatedButton(
-              onPressed: () async {
-                if (newpassword.text.isEmpty) {
-                  showMessage("Please Enter your new password");
-                } else if (confpassword.text.isEmpty) {
-                  showMessage("Please Enter your new password");
-                } else if (confpassword.text == newpassword.text) {
-                  FirebaseAuthHelper.instance
-                      .changePassword(newpassword.text, context);
-                } else {
-                  showMessage("Password doesn't match");
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightBlueAccent,
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
               ),
-              child: const Text(
-                "Update",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              elevation: 5,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      "Update Your Password",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.lightBlueAccent,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    buildPasswordField(
+                        "New Password", newpassword, isShowPassword),
+                    const SizedBox(height: 20),
+                    buildPasswordField(
+                        "Confirm Password", confpassword, isShowPassword),
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (newpassword.text.isEmpty) {
+                            showMessage("Please enter your new password");
+                          } else if (confpassword.text.isEmpty) {
+                            showMessage("Please confirm your password");
+                          } else if (confpassword.text == newpassword.text) {
+                            FirebaseAuthHelper.instance
+                                .changePassword(newpassword.text, context);
+                          } else {
+                            showMessage("Passwords do not match");
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 32),
+                          backgroundColor: Colors.lightBlueAccent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Text(
+                          "Update Password",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-        ],
+        ),
       ),
+    );
+  }
+
+  Widget buildPasswordField(
+      String hint, TextEditingController controller, bool isVisible) {
+    return TextFormField(
+      controller: controller,
+      obscureText: isVisible,
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: const TextStyle(color: Colors.grey),
+        prefixIcon: const Icon(Icons.lock, color: Colors.lightBlueAccent),
+        suffixIcon: IconButton(
+          icon: Icon(
+            isVisible ? Icons.visibility : Icons.visibility_off,
+            color: Colors.lightBlueAccent,
+          ),
+          onPressed: () {
+            setState(() {
+              isShowPassword = !isShowPassword;
+            });
+          },
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.lightBlueAccent),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(width: 2, color: Colors.lightBlueAccent),
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+      ),
+      keyboardType: TextInputType.visiblePassword,
     );
   }
 }
