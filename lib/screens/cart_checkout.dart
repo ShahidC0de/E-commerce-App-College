@@ -1,8 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_trove_shop/Firebase/firebase_firestore.dart';
 import 'package:tech_trove_shop/constants/constants.dart';
-import 'package:tech_trove_shop/constants/routes.dart';
 import 'package:tech_trove_shop/provider/app_provider.dart';
 import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
 import 'package:tech_trove_shop/stripe_helper/stripe_helper.dart';
@@ -224,6 +225,7 @@ class CustomRatingBar extends StatefulWidget {
   final int rating;
   final ValueChanged<int> onRatingChanged;
 
+  // ignore: use_super_parameters
   const CustomRatingBar({
     Key? key,
     required this.rating,
