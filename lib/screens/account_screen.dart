@@ -10,6 +10,7 @@ import 'package:tech_trove_shop/screens/change_password.dart';
 import 'package:tech_trove_shop/screens/edit_profile.dart';
 import 'package:tech_trove_shop/screens/favourate_screen.dart';
 import 'package:tech_trove_shop/screens/order_screen.dart';
+import 'package:tech_trove_shop/screens/welcome.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -74,7 +75,10 @@ class _AccountScreenState extends State<AccountScreen> {
                       icon: Icons.shopping_bag_outlined,
                       title: "Orders",
                       onTap: () {
-                        Routes().push(const OrderScreen(), context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OrderScreen()));
                       },
                     ),
                     _buildCustomListTile(
@@ -105,7 +109,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       icon: Icons.logout_outlined,
                       title: "Logout",
                       onTap: () {
-                        FirebaseAuthHelper.instance.signOut();
+                        setState(() {
+                          FirebaseAuthHelper.instance.signOut();
+                        });
                       },
                     ),
                     const SizedBox(height: 20),

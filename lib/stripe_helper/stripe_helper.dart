@@ -67,18 +67,19 @@ class StripeHelper {
         'amount': amount,
         'currency': currency,
       };
-      final authorizationkey = dotenv.env['AUTHORIZATION_KEY'] ?? "";
+      final authorizationkey = dotenv.env['STRIPE_KEY'] ?? "";
 
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
-          'Authorization': authorizationkey, // in .env file ....
+          'Authorization': 'Bearer $authorizationkey', // in .env file ....
         },
         body: body,
       );
 
       return json.decode(response.body);
     } catch (error) {
+      debugPrint(error.toString());
       throw Exception('Failed to create payment intent');
     }
   }

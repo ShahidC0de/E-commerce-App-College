@@ -1,8 +1,7 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_trove_shop/Firebase/firebase_firestore.dart';
+import 'package:tech_trove_shop/constants/constants.dart';
 import 'package:tech_trove_shop/constants/routes.dart';
 import 'package:tech_trove_shop/provider/app_provider.dart';
 import 'package:tech_trove_shop/screens/custom_bottom_bar.dart';
@@ -124,41 +123,145 @@ class _CartItemCheckOutState extends State<CartItemCheckOut> {
   }
 
   Future<void> handlePayment(AppProvider appProvider) async {
+    bool value = false;
+
     switch (groupValue) {
       case 1: // Cash on Delivery
-        bool value =
+        value =
             await FirebaseFirestoreHelper.instance.uploadOrderedProductFirebase(
           appProvider.getBuyProductList,
           context,
           "Cash On Delivery",
         );
-        appProvider.clearBuyProduct();
-        if (value) {
-          Future.delayed(const Duration(seconds: 4), () {
-            Routes.instance.push(const CustomBottomBar(), context);
-          });
-        }
         break;
       case 2: // Online Payment
-        double totalprice = appProvider.totalPrice() * 100;
-        bool isSuccessfullyPayment =
-            await StripeHelper.instance.makePayment(totalprice.toString());
-        if (isSuccessfullyPayment) {
-          bool value = await FirebaseFirestoreHelper.instance
+        double totalPrice = appProvider.totalPrice() * 100;
+        bool isSuccessfulPayment =
+            await StripeHelper.instance.makePayment(totalPrice.toString());
+        if (isSuccessfulPayment) {
+          value = await FirebaseFirestoreHelper.instance
               .uploadOrderedProductFirebase(
             appProvider.getBuyProductList,
             context,
             "Paid",
           );
-          appProvider.clearBuyProduct();
-          if (value) {
-            Future.delayed(const Duration(seconds: 2), () {
-              Routes.instance.push(const CustomBottomBar(), context);
-            });
-          }
         }
         break;
-      default:
     }
+
+    if (value) {
+      appProvider.clearBuyProduct();
+      await showRatingDialog(context); // Show the rating dialog first
+    }
+  }
+
+  Future<void> showRatingDialog(BuildContext context) async {
+    int selectedRating = 3; // Default rating
+    TextEditingController commentController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Rate Your Experience"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomRatingBar(
+                rating: selectedRating,
+                onRatingChanged: (rating) {
+                  setState(() {
+                    selectedRating = rating;
+                  });
+                },
+              ),
+              TextField(
+                controller: commentController,
+                decoration: const InputDecoration(
+                  labelText: "Leave a comment",
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (context) => const CustomBottomBar()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () async {
+                String comment = commentController.text;
+                await FirebaseFirestoreHelper.instance.saveRatingAndComment(
+                  rating: selectedRating,
+                  comment: comment,
+                );
+                showMessage('Successfully submitted');
+
+                // Navigate to CustomBottomBar after submitting the rating
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (context) => const CustomBottomBar()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+              child: const Text("Submit"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+// Custom Rating Bar Widget
+class CustomRatingBar extends StatefulWidget {
+  final int rating;
+  final ValueChanged<int> onRatingChanged;
+
+  const CustomRatingBar({
+    Key? key,
+    required this.rating,
+    required this.onRatingChanged,
+  }) : super(key: key);
+
+  @override
+  State<CustomRatingBar> createState() => _CustomRatingBarState();
+}
+
+class _CustomRatingBarState extends State<CustomRatingBar> {
+  int currentRating = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    currentRating = widget.rating; // Initialize current rating
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(5, (index) {
+        return IconButton(
+          icon: Icon(
+            Icons.star,
+            color: index < currentRating ? Colors.amber : Colors.grey,
+          ),
+          onPressed: () {
+            setState(() {
+              currentRating = index + 1; // Update current rating
+              widget.onRatingChanged(
+                  currentRating); // Notify parent of rating change
+            });
+          },
+        );
+      }),
+    );
   }
 }

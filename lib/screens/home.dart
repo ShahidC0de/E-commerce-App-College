@@ -204,17 +204,6 @@ class _HomePageState extends State<HomePage> {
                                                             height: 50),
                                                         const SizedBox(
                                                             height: 5),
-                                                        Text(
-                                                          category.name,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 12,
-                                                            color:
-                                                                Colors.black87,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                        ),
                                                       ],
                                                     ),
                                                   ),

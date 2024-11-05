@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -173,5 +175,36 @@ class FirebaseFirestoreHelper {
         .update({
       'status': update,
     });
+  }
+
+  Future<void> saveRatingAndComment({
+    required int rating,
+    required String comment,
+  }) async {
+    DocumentSnapshot documentSnapshot = await _firebaseFirestore
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (documentSnapshot.exists) {
+      // Get the data as a Map<String, dynamic>
+      Map<String, dynamic> jsonData =
+          documentSnapshot.data() as Map<String, dynamic>;
+
+      // Now you can create a UserModel instance
+      UserModel userModel = userModelFromJson(jsonData);
+
+      // Now you can use userModel as needed
+      // For example, saving rating and comment
+      await _firebaseFirestore.collection('ratings').add({
+        'userId': userModel.id, // or however you identify the user
+        'name': userModel.name,
+        'rating': rating,
+        'comment': comment,
+      });
+      debugPrint("successfully uploaded");
+    } else {
+      debugPrint('User document does not exist');
+    }
   }
 }
