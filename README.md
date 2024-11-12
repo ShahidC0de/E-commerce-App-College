@@ -3,6 +3,7 @@ The E-Commerce_Application based on single store where the user can browse, sele
 
 ## Description
 The project is E-Commerce-Application, it can be use for private stores where the store owner can go online to keep a strong hold on their customers, with flexible payment method, Cash On Delivery | Online Payment.
+## Screenshot
 
 ## Features
 Login, SignUp, Firebase Email Verification, Searching the product, ordering the product, changing user password, uploading profile image, Flexible payment method, canceling the order, verifying that order is delivered etc.
